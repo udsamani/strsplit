@@ -14,7 +14,7 @@ impl<'haystack, 'delimiter> StrSplit<'haystack, 'delimiter> {
 }
 
 
-impl<'haystack, 'delimiter> Iterator for StrSplit<'haystack, 'delimiter> {
+impl<'haystack> Iterator for StrSplit<'haystack, '_> {
     type Item = &'haystack str;
     fn next (&mut self) -> Option<Self::Item> {
         let remainder = self.remainder.as_mut()?;
@@ -29,7 +29,7 @@ impl<'haystack, 'delimiter> Iterator for StrSplit<'haystack, 'delimiter> {
 }
 
 
-fn until_char<'s>(s: &'s str, c: char) -> &'s str {
+fn until_char(s: &str, c: char) -> &'_ str {
     StrSplit::new(s, &format!("{}", c ))
         .next()
         .expect("StrSplit always gives at least one result")
